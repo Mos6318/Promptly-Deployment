@@ -8,6 +8,7 @@ import LibraryPage from './pages/app/LibraryPage';
 import MixerPage from './pages/app/MixerPage';
 import TemplatesPage from './pages/app/TemplatesPage';
 import SettingsPage from './pages/app/SettingsPage';
+import ApiKeysPage from './pages/app/ApiKeysPage';
 import { AuthProvider } from './context/AuthContext';
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
             <Route path="/mixer" element={<MixerPage />} />
             <Route path="/templates" element={<TemplatesPage />} />
             <Route path="/settings" element={<SettingsPage />} />
+            <Route path="/api-keys" element={<ApiKeysPage />} />
           </Route>
         </Routes>
       </Router>

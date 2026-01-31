@@ -43,26 +43,29 @@ export function Navbar() {
                 <div className="flex items-center gap-4">
                     {user ? (
                         <div className="flex items-center gap-3">
-                            <span className="text-sm font-medium hidden md:block">{user.name}</span>
+                            <span className="text-sm font-medium hidden md:block">{user.nickname || user.name}</span>
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" className="relative h-10 w-10 rounded-full">
                                         <Avatar className="h-10 w-10 border border-zinc-200">
-                                            <AvatarImage src={user.avatar} alt={user.name} />
-                                            <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                                            <AvatarImage src={user.avatar} alt={user.nickname || user.name} />
+                                            <AvatarFallback>{(user.nickname || user.name).charAt(0)}</AvatarFallback>
                                         </Avatar>
                                     </Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent className="w-56" align="end" forceMount>
                                     <DropdownMenuLabel className="font-normal">
                                         <div className="flex flex-col space-y-1">
-                                            <p className="text-sm font-medium leading-none">{user.name}</p>
+                                            <p className="text-sm font-medium leading-none">{user.nickname || user.name}</p>
                                             <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
                                         </div>
                                     </DropdownMenuLabel>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={() => navigate('/settings')}>
-                                        Settings
+                                        Profile Settings
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => navigate('/api-keys')}>
+                                        API Keys
                                     </DropdownMenuItem>
                                     <DropdownMenuSeparator />
                                     <DropdownMenuItem onClick={handleLogout} className="text-red-500">

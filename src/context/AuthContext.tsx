@@ -3,7 +3,8 @@ import { useLibraryStore } from '@/store/libraryStore';
 
 interface User {
     id: string;
-    name: string;
+    name: string; // Signup Name (Legal/Full Name)
+    nickname?: string; // Display Name
     email: string;
     password?: string; // In a real app, never store plain text passwords!
     avatar?: string;
@@ -13,6 +14,9 @@ interface AuthContextType {
     user: User | null;
     login: (email: string, password: string) => Promise<void>;
     signup: (name: string, email: string, password: string) => Promise<void>;
+    updateProfile: (nickname: string, avatar: string) => void;
+    changePassword: (oldPassword: string, newPassword: string) => Promise<void>;
+    deleteAccount: (password: string) => Promise<void>;
     logout: () => void;
     isAuthenticated: boolean;
     error: string | null;
@@ -93,13 +97,66 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem('promptly_session_user', JSON.stringify(safeUser));
     };
 
+    const updateProfile = (nickname: string, avatar: string) => {
+        if (!user) return;
+
+        const updatedUser = { ...user, nickname, avatar };
+        setUser(updatedUser);
+        localStorage.setItem('promptly_session_user', JSON.stringify(updatedUser));
+
+        // Also update in the main users list
+        const users = getUsers();
+        const userIndex = users.findIndex(u => u.email === user.email);
+        if (userIndex !== -1) {
+            users[userIndex] = { ...users[userIndex], nickname, avatar };
+            localStorage.setItem('promptly_users', JSON.stringify(users));
+        }
+    };
+
+    const changePassword = async (oldPassword: string, newPassword: string) => {
+        if (!user) return;
+        setError(null);
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const users = getUsers();
+        const userIndex = users.findIndex(u => u.email === user.email);
+
+        if (userIndex === -1) throw new Error('User not found');
+
+        if (users[userIndex].password !== oldPassword) {
+            throw new Error('Incorrect current password');
+        }
+
+        users[userIndex].password = newPassword;
+        localStorage.setItem('promptly_users', JSON.stringify(users));
+    };
+
+    const deleteAccount = async (password: string) => {
+        if (!user) return;
+        setError(null);
+        await new Promise(resolve => setTimeout(resolve, 500));
+
+        const users = getUsers();
+        const userIndex = users.findIndex(u => u.email === user.email);
+
+        if (userIndex === -1) throw new Error('User not found');
+
+        if (users[userIndex].password !== password) {
+            throw new Error('Incorrect password');
+        }
+
+        const newUsers = users.filter((_, index) => index !== userIndex);
+        localStorage.setItem('promptly_users', JSON.stringify(newUsers));
+        logout();
+    };
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem('promptly_session_user');
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, signup, logout, isAuthenticated: !!user, error }}>
+        <AuthContext.Provider value={{ user, login, signup, updateProfile, changePassword, deleteAccount, logout, isAuthenticated: !!user, error }}>
             {children}
         </AuthContext.Provider>
     );
