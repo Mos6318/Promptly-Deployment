@@ -43,8 +43,8 @@ export default function SettingsPage() {
     const handleSaveProfile = () => {
         if (user && nickname) {
             const avatarUrl = selectedAvatarSeed
-                ? `https://api.dicebear.com/7.x/notionists/svg?seed=${selectedAvatarSeed}`
-                : user.avatar || `https://api.dicebear.com/7.x/notionists/svg?seed=${nickname}`;
+                ? `https://api.dicebear.com/7.x/avataaars/svg?seed=${selectedAvatarSeed}`
+                : user.avatar || `https://api.dicebear.com/7.x/avataaars/svg?seed=${nickname}`;
 
             updateProfile(nickname, avatarUrl);
             setProfileSaved(true);
@@ -145,7 +145,7 @@ export default function SettingsPage() {
                                             )}
                                         >
                                             <Avatar className="h-12 w-12 border border-zinc-200 dark:border-zinc-700">
-                                                <AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${seed}`} />
+                                                <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${seed}`} />
                                                 <AvatarFallback>{seed[0]}</AvatarFallback>
                                             </Avatar>
                                         </button>
