@@ -252,10 +252,10 @@ export default function MixerPage() {
                                 {myPromptsSearchQuery ? "Try a different search term" : "Create your first prompt in the workspace"}
                             </p>
                             <Button
-                                onClick={handleMix}
+                                onClick={handleCreateNew}
                                 className="bg-gradient-to-r from-[#CEE1EA] to-[#3C83EB] hover:from-[#B8D4E0] hover:to-[#2A6FD9] text-white"
                             >
-                                Mix New Prompt
+                                Create New Prompt
                             </Button>
                         </div>
                     </div>
