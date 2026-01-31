@@ -7,7 +7,7 @@ export default function LandingPage() {
     const navigate = useNavigate();
 
     return (
-        <div className="container mx-auto px-4 md:px-8 py-12 md:py-24 grid lg:grid-cols-2 gap-12 items-center">
+        <div className="container mx-auto px-4 md:px-8 h-[calc(100vh-5rem)] overflow-hidden grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content (Left) */}
             <div className="flex flex-col gap-6 max-w-2xl ml-16">
                 <div className="space-y-2">

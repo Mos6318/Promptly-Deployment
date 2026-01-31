@@ -46,10 +46,10 @@ export default function SettingsPage() {
 
             <div className="space-y-6">
                 {/* Gemini */}
-                <div className="p-6 rounded-xl border border-border bg-card shadow-sm">
+                <div className="p-6 rounded-xl border shadow-sm transition-colors border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <h3 className="font-semibold text-lg">Google Gemini</h3>
+                            <h3 className="font-semibold text-lg dark:text-white">Google Gemini</h3>
                             <p className="text-sm text-muted-foreground">Get your API key from Google AI Studio</p>
                         </div>
                         <input
@@ -70,7 +70,7 @@ export default function SettingsPage() {
                                 value={settings.gemini.apiKey}
                                 onChange={(e) => updateApiKey('gemini', e.target.value)}
                                 placeholder="Enter your Gemini API key"
-                                className="pr-10"
+                                className="pr-10 bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                             />
                             <button
                                 type="button"
@@ -84,10 +84,10 @@ export default function SettingsPage() {
                 </div>
 
                 {/* OpenAI */}
-                <div className="p-6 rounded-xl border border-border bg-card shadow-sm">
+                <div className="p-6 rounded-xl border shadow-sm transition-colors border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <h3 className="font-semibold text-lg">OpenAI (ChatGPT)</h3>
+                            <h3 className="font-semibold text-lg dark:text-white">OpenAI (ChatGPT)</h3>
                             <p className="text-sm text-muted-foreground">Get your API key from OpenAI Platform</p>
                         </div>
                         <input
@@ -108,7 +108,7 @@ export default function SettingsPage() {
                                 value={settings.openai.apiKey}
                                 onChange={(e) => updateApiKey('openai', e.target.value)}
                                 placeholder="Enter your OpenAI API key"
-                                className="pr-10"
+                                className="pr-10 bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                             />
                             <button
                                 type="button"
@@ -122,10 +122,10 @@ export default function SettingsPage() {
                 </div>
 
                 {/* Claude */}
-                <div className="p-6 rounded-xl border border-border bg-card shadow-sm">
+                <div className="p-6 rounded-xl border shadow-sm transition-colors border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
                     <div className="flex items-center justify-between mb-4">
                         <div>
-                            <h3 className="font-semibold text-lg">Anthropic Claude</h3>
+                            <h3 className="font-semibold text-lg dark:text-white">Anthropic Claude</h3>
                             <p className="text-sm text-muted-foreground">Get your API key from Anthropic Console</p>
                         </div>
                         <input
@@ -146,7 +146,7 @@ export default function SettingsPage() {
                                 value={settings.claude.apiKey}
                                 onChange={(e) => updateApiKey('claude', e.target.value)}
                                 placeholder="Enter your Claude API key"
-                                className="pr-10"
+                                className="pr-10 bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                             />
                             <button
                                 type="button"
@@ -169,7 +169,11 @@ export default function SettingsPage() {
 
                 {/* Save Button */}
                 <div className="flex items-center gap-4">
-                    <Button onClick={handleSave} size="lg" className="min-w-32">
+                    <Button
+                        onClick={handleSave}
+                        size="lg"
+                        className="min-w-32 bg-gradient-to-r from-[#CEE1EA] to-[#3C83EB] text-blue-950 border-none hover:opacity-90 transition-opacity"
+                    >
                         Save Settings
                     </Button>
                     {saved && (
