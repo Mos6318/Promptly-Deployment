@@ -1,0 +1,913 @@
+# Promptly - Product Requirements Document (PRD)
+
+**Version:** 1.0  
+**Date:** January 4, 2026  
+**Product Name:** Promptly  
+**Tagline:** Shape learning experience
+
+---
+
+## 1. Executive Summary
+
+### 1.1 Product Overview
+Promptly is a web-based application designed to revolutionize prompt engineering by providing a modular, reusable system for creating, managing, and optimizing AI prompts. The platform combines AI-assisted prompt generation with a component library system, enabling users to build sophisticated prompts through both conversational interfaces and visual block composition.
+
+### 1.2 Target Users
+- AI/ML engineers and researchers
+- Product managers working with AI systems
+- Students wanting to learn proper usage of AI tools
+- Educators teaching prompt engineering
+
+### 1.3 Core Value Proposition
+- **Efficiency:** Reuse proven prompt components across projects
+- **Consistency:** Maintain standardized prompt structures
+- **Learning:** Guided prompt creation with AI assistance focusin on step by step creation
+- **Collaboration:** Share and discover effective prompt patterns
+- **Quality:** Build on tested, refined prompt elements
+
+---
+
+## 2. Product Goals & Success Metrics
+
+### 2.1 User Goals
+- Reduce prompt creation time by 60%
+- Improve prompt effectiveness through reusable components
+- Learn prompt engineering best practices
+- Build a personal library of reliable prompt components
+
+## 3. User Personas
+
+### 3.1 Primary Persona: "Alex the AI Engineer"
+- **Demographics:** 28-35 years old, Computer Science background
+- **Goals:** Create effective prompts quickly, maintain consistency across projects
+- **Pain Points:** Starting from scratch each time, forgetting effective patterns
+- **Use Case:** Building prompts for production AI applications
+
+### 3.2 Secondary Persona: "Morgan the Content Creator"
+- **Demographics:** 25-40 years old, creative professional
+- **Goals:** Generate consistent AI content, learn prompt techniques
+- **Pain Points:** Uncertainty about prompt quality, inefficient trial-and-error
+- **Use Case:** Creating content generation workflows
+
+### 3.3 Tertiary Persona: "Sam the Educator"
+- **Demographics:** 30-50 years old, teaching or training background
+- **Goals:** Teach prompt engineering, provide students with examples
+- **Pain Points:** Need for structured learning resources
+- **Use Case:** Creating educational prompt templates
+
+---
+
+## 4. Feature Requirements
+
+### 4.1 Core Features (MVP - Phase 1)
+
+#### 4.1.1 Landing Page
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Clear value proposition and product explanation
+- "New Prompt" CTA button
+- Navigation to Home, Library(prompts and elements created by users), Templates(basic templates for common use cases)
+- User authentication (Sign Up/Login)
+- Responsive design with modern aesthetic
+- Abstract 3D visual elements (glassmorphism style)
+
+**User Stories:**
+- As a new visitor, I want to understand what Promptly does within 5 seconds
+- As a returning user, I want quick access to create a new prompt from elements i created before with just little twist depending o use case
+- As any user, I want to navigate easily between main sections
+
+#### 4.1.2 AI Chat Assistant ("Chat with Chad")
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Real-time chat interface with Claude API integration
+- Constrained to prompt engineering topics only
+- Text input field with "Commit to Prompt" action
+- Conversation history within session
+- Streaming responses for better UX,
+- System prompt that enforces domain constraints
+
+**System Prompt Structure:**
+```
+You are "Chef", a specialized prompt engineering assistant for Promptly.
+
+SCOPE: You ONLY help with:
+- Prompt creation and structure
+- Prompt engineering techniques (CoT, Few-Shot, ReAct, Tree of Thoughts, etc.)
+- Explaining prompt components (like: Task, Actor, Context, Output, Examples)
+- Improving and refining prompts
+- Suggesting appropriate techniques for user goals
+
+AVAILABLE TECHNIQUES: Chain of Thought, Few-Shot Learning, ReAct, Tree of Thoughts, 
+Role Prompting, Constitutional AI, Self-Consistency, Meta-Prompting, and more if available from reliable web sources.
+
+BLOCK TYPES YOU HELP CREATE:depending on the use case. 
+
+Chef is a meta-prompt creation assistant that guides users step-by-step through building prompts using various techniques.
+Conversation Flow:
+
+Introduces himself: "Hi! My name is Chef! A meta prompt master."
+Asks what LLM will be used (Claude, ChatGPT, etc.)
+Asks about the task/project description
+Asks which technique to use (TACO, RISEN, Chain of Thought, Multiple Outputs, Tree of Thought, System Prompting)
+
+If user doesn't know, Chef recommends one with a SHORT explanation why
+
+
+Guides through technique-specific components step-by-step
+For each component, Chef proposes ONE option (max 3 sentences) based on context
+User can accept, modify, or provide their own
+After completing standard components, asks: "Would you like to add any additional elements? (e.g., examples, constraints, formatting rules)"
+Only generates final prompt when user says "generate final prompt"
+
+Communication Style:
+
+Concise and token-efficient (no "Excellent choice!" or unnecessary phrases)
+No "Chef:" prefix before responses
+Direct and clear
+Proposes solutions rather than asking open-ended questions
+Keeps conversation understandable but minimal
+
+User Flexibility:
+
+Users can add custom segments at any point (examples, constraints, edge cases, formatting rules, etc.)
+Users can request modifications to any component before finalizing
+Users can ask Chef to include additional elements specific to their use case
+
+Reference Materials:
+Chef has access to XML files containing detailed information about:
+
+TACO & RISEN frameworks
+Zero-shot, One-shot, Few-shot, Iterative prompting
+Chain of Thought, Multiple Outputs, Tree of Thought
+System Prompting, Meta-Prompting
+Interview techniques, persona creation, presentation building
+
+Key Rule: Chef uses these references to know WHAT to ask and HOW to structure questions for each technique, especially for complex ones like Chain of Thought (which requires examples with reasoning) or Tree of Thought (which requires multiple paths and evaluation criteria).
+
+Real-Time Prompt Showcase (Right Panel):
+As Chef asks questions and proposes options in the chat (left side), the right panel displays a live preview of the prompt being built.
+How it works:
+
+Live Proposals: When Chef proposes something (e.g., "Task: Easy-to-use web app that equips the next generation of designers and engineers with the foundational skills for innovation: Prompt Creation!"), it appears in the right panel under the appropriate section (Task, Actor, Context, Output) in a "preview" or "pending" state.
+Waiting State: Sections that haven't been filled yet show "Waiting to fill the prompt" in gray/placeholder text.
+User Response: When the user accepts, modifies, or provides their own answer in the chat, that section updates in real-time on the right.
+Commit to Lock: The "Commit to Prompt" button (or command in chat) locks in that specific element, moving it from "preview" to "confirmed" state. Each element has its own commit action - you don't commit everything at once, but rather commit each component (Task, Actor, Context, Output) separately as you complete them.
+Visual Feedback: Committed elements might change color, get a checkmark, or have a different visual state to show they're locked in and approved.
+
+So the flow is:
+Chef proposes → Right panel previews → User approves/modifies → User commits that element → Element locks → Move to next component
+
+**Technical Specifications:**
+- API: Anthropic Claude API (claude-sonnet-4-20250514)
+- Max tokens: 1000 per response
+- Temperature: 0.7 for creativity with consistency
+- Context window management: Last 10 messages + system prompt
+- Error handling: Graceful fallbacks for API failures
+
+**User Stories:**
+- As a user, I want to describe my goal and get prompt structure suggestions
+- As a beginner, I want explanations of different prompt techniques
+- As an advanced user, I want to refine existing prompts with AI assistance
+
+#### 4.1.3 Prompt Builder Interface
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Two-panel layout: Chat (left) + Prompt Builder (right)
+- Editable prompt title field ("Name Me!" placeholder)
+- Structured block sections(depending on used technique):
+  - Task
+  - Actor
+  - Context
+  - Output
+  - Examples
+- Each block is:
+  - Independently editable (rich text)
+  - Collapsible/expandable
+  - Deletable
+  - Reorderable (drag to reposition)
+- "Save" button to store prompt in the library
+- Markdown support in blocks
+
+**User Stories:**
+- As a user, I want to see my prompt structure clearly organized
+- As a user, I want to edit any block independently
+- As a user, I want my work saved automatically
+- As a user, I want to add custom block types beyond the defaults
+
+#### 4.1.4 Block Library Sidebar
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Search functionality (filters blocks by content/tags)
+- Categorized view (group by block type)
+- Block preview cards showing:
+  - Block type badge
+  - First 100 characters of content
+  - Source prompt name
+  - Created date
+- Drag and drop to insert into current prompt
+- Hover preview with full content
+- Infinite scroll or pagination
+- Filter by:
+  - Block type
+  - Date created
+  - Source prompt
+  - Custom tags
+
+**User Stories:**
+- As a user, I want to quickly find and reuse blocks from past prompts
+- As a user, I want to preview block content before inserting
+- As a user, I want to filter blocks by type or project
+
+#### 4.1.5 Prompt Library (Gallery View)
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Card-based grid layout (responsive)
+- Each card displays:
+  - Prompt title
+  - All constituent blocks (collapsed preview)
+  - Color-coded borders per prompt
+  - Created/modified date
+  - Quick action buttons (Edit, Duplicate, Delete)
+- Horizontal carousel navigation (< >)
+- "Mixer" button for combining prompts
+- Search and filter capabilities
+- Sort options:
+  - Recently created
+  - Recently modified
+  - Alphabetical
+  - Most used
+
+**User Stories:**
+- As a user, I want to see all my saved prompts at a glance
+- As a user, I want to quickly duplicate successful prompts
+- As a user, I want to organize prompts by project or technique
+
+#### 4.1.6 User Authentication
+**Priority:** P0 (Critical)
+
+**Requirements:**
+- Email/password authentication
+- OAuth options (Google, GitHub)
+- Password reset functionality
+- Email verification
+- Session management
+- Secure token storage
+
+**Technical Specifications:**
+- Auth provider: Auth0, Supabase Auth, or Clerk
+- JWT tokens for API authentication
+- Refresh token rotation
+- HTTPS only
+
+---
+
+### 4.2 Enhanced Features (Phase 2)
+
+#### 4.2.1 Advanced Block Reusability
+**Priority:** P1 (High)
+
+**Requirements:**
+- Drag blocks directly from library into prompt builder
+- Visual indication of library-sourced vs. custom blocks
+- Block versioning (track changes over time)
+- Block templates (pre-configured multi-block patterns)
+- Tags and categories for organization
+- Block performance tracking (which blocks in successful prompts)
+
+#### 4.2.2 Template System
+**Priority:** P1 (High)
+
+**Requirements:**
+- Pre-built prompt templates for common use cases:
+  - Chain of Thought reasoning
+  - Few-Shot learning
+  - ReAct agent
+  - Creative writing
+  - Code generation
+  - Data analysis
+- Template marketplace (community templates)
+- Template customization
+- Template ratings and reviews
+- One-click template instantiation
+
+#### 4.2.3 Prompt Mixer
+**Priority:** P1 (High)
+
+**Requirements:**
+- Select multiple prompts to combine
+- Visual interface showing source prompts
+- Intelligent merge suggestions from AI
+- Conflict resolution for duplicate blocks
+- Preview combined result
+- Save as new prompt or template
+
+#### 4.2.4 Collaboration Features
+**Priority:** P2 (Medium)
+
+**Requirements:**
+- Share prompts via link (read-only or editable)
+- Team workspaces
+- Comment on blocks
+- Version history with diff view
+- Real-time collaborative editing
+- Permission management
+
+---
+
+### 4.3 Advanced Features (Phase 3)
+
+#### 4.3.1 Node-Based Prompt Builder
+**Priority:** P2 (Medium)
+
+**Requirements:**
+- Alternative view mode for complex prompts
+- Nodes represent blocks with input/output connectors
+- Visual flow showing information dependencies
+- Support for conditional logic
+- Branch and merge patterns
+- Export to linear prompt structure
+- Library integration (React Flow)
+
+**Use Cases:**
+- Multi-agent systems
+- Complex reasoning chains
+- Conditional prompt flows
+- Workflow visualization
+
+#### 4.3.2 Prompt Testing & Analytics
+**Priority:** P2 (Medium)
+
+**Requirements:**
+- Test prompts against multiple inputs
+- Compare outputs from different prompt versions
+- Track prompt performance metrics
+- A/B testing framework
+- Cost estimation (token usage)
+- Response quality scoring
+
+#### 4.3.3 Prompt Optimization
+**Priority:** P2 (Medium)
+
+**Requirements:**
+- AI-suggested improvements
+- Token optimization (reduce without losing effectiveness)
+- Technique recommendations
+- Anti-pattern detection
+- Best practice checklist
+
+#### 4.3.4 Knowledge Base / RAG Integration
+**Priority:** P2 (Medium)
+
+**Requirements:**
+- Upload documentation for prompt context
+- Semantic search across knowledge base
+- Auto-suggest relevant context blocks
+- Vector database for embeddings
+- Document chunking and indexing
+
+---
+
+## 5. Technical Architecture
+
+### 5.1 Technology Stack
+
+#### Frontend
+- **Framework:** React 18+ with TypeScript
+- **Styling:** Tailwind CSS
+- **UI Components:** shadcn/ui (accessible primitives)
+- **Drag & Drop:** dnd-kit
+- **Node Editor:** React Flow (Phase 3)
+- **Rich Text:** Lexical or TipTap
+- **State Management:** Zustand or React Context + Hooks
+- **Routing:** React Router v6
+- **API Client:** Axios or fetch with React Query
+- **Build Tool:** Vite
+
+#### Backend
+- **Framework:** Node.js with Express OR Python with FastAPI
+- **Database:** PostgreSQL 15+
+- **Vector Database:** pgvector (PostgreSQL extension) OR Pinecone
+- **Authentication:** Auth0 / Clerk / Supabase Auth
+- **API Design:** RESTful + WebSocket for real-time features
+- **File Storage:** AWS S3 or Cloudflare R2
+- **Caching:** Redis
+
+#### AI Integration
+- **Primary LLM:** Anthropic Claude (claude-sonnet-4-20250514)
+- **Fallback:** OpenAI GPT-4 Turbo
+- **Vector Embeddings:** OpenAI text-embedding-3-small
+- **Prompt Management:** LangChain or custom abstraction
+
+#### Infrastructure
+- **Hosting:** Vercel (frontend) + Railway/Render (backend)
+- **CDN:** Cloudflare
+- **Monitoring:** Sentry (errors) + PostHog (analytics)
+- **CI/CD:** GitHub Actions
+
+### 5.2 Database Schema
+
+#### Users Table
+```sql
+CREATE TABLE users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email VARCHAR(255) UNIQUE NOT NULL,
+  username VARCHAR(100) UNIQUE,
+  auth_provider VARCHAR(50),
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Prompts Table
+```sql
+CREATE TABLE prompts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  title VARCHAR(255) NOT NULL,
+  description TEXT,
+  technique VARCHAR(100), -- 'chain_of_thought', 'few_shot', etc.
+  is_template BOOLEAN DEFAULT FALSE,
+  is_public BOOLEAN DEFAULT FALSE,
+  view_count INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Blocks Table
+```sql
+CREATE TABLE blocks (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  prompt_id UUID REFERENCES prompts(id) ON DELETE CASCADE,
+  type VARCHAR(50) NOT NULL, -- 'task', 'actor', 'context', etc.
+  label VARCHAR(100),
+  content TEXT NOT NULL,
+  order_index INT NOT NULL,
+  is_reusable BOOLEAN DEFAULT TRUE,
+  metadata JSONB, -- tags, source info, etc.
+  created_at TIMESTAMP DEFAULT NOW(),
+  updated_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Block Library Table
+```sql
+CREATE TABLE block_library (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  block_id UUID REFERENCES blocks(id) ON DELETE CASCADE,
+  name VARCHAR(255),
+  category VARCHAR(100),
+  tags TEXT[],
+  usage_count INT DEFAULT 0,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+#### Chat History Table
+```sql
+CREATE TABLE chat_history (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  session_id UUID NOT NULL,
+  role VARCHAR(20) NOT NULL, -- 'user', 'assistant'
+  content TEXT NOT NULL,
+  prompt_id UUID REFERENCES prompts(id) ON DELETE SET NULL,
+  created_at TIMESTAMP DEFAULT NOW()
+);
+```
+
+### 5.3 API Endpoints
+
+#### Authentication
+- `POST /api/auth/register` - Create new user account
+- `POST /api/auth/login` - User login
+- `POST /api/auth/logout` - User logout
+- `POST /api/auth/refresh` - Refresh access token
+- `POST /api/auth/reset-password` - Request password reset
+
+#### Prompts
+- `GET /api/prompts` - List user's prompts (paginated)
+- `GET /api/prompts/:id` - Get specific prompt with blocks
+- `POST /api/prompts` - Create new prompt
+- `PUT /api/prompts/:id` - Update prompt
+- `DELETE /api/prompts/:id` - Delete prompt
+- `POST /api/prompts/:id/duplicate` - Duplicate prompt
+- `GET /api/prompts/templates` - List public templates
+
+#### Blocks
+- `GET /api/blocks/library` - Get user's block library
+- `POST /api/blocks` - Create new block
+- `PUT /api/blocks/:id` - Update block
+- `DELETE /api/blocks/:id` - Delete block
+- `POST /api/blocks/:id/save-to-library` - Save block to library
+- `GET /api/blocks/search` - Search blocks (full-text + vector)
+
+#### Chat
+- `POST /api/chat/message` - Send message to Chef
+
+- `GET /api/chat/history/:sessionId` - Get chat history
+- `DELETE /api/chat/history/:sessionId` - Clear session history
+- `POST /api/chat/commit` - Commit chat result to prompt builder
+
+#### AI Operations
+- `POST /api/ai/suggest-blocks` - Get block suggestions for goal
+- `POST /api/ai/improve-prompt` - Get improvement suggestions
+- `POST /api/ai/explain-technique` - Explain prompt technique
+- `POST /api/ai/generate-examples` - Generate example content
+
+### 5.4 System Prompt for Chef (Detailed)
+
+```markdown
+# System Identity
+You are "Chef", an expert prompt engineering assistant built into Promptly, 
+a platform for creating and managing AI prompts.
+
+# Your Capabilities
+You help users create effective prompts by:
+1. Understanding their goals and suggesting appropriate structures
+2. Explaining prompt engineering techniques and best practices
+3. Generating content for specific prompt blocks (Task, Actor, Context, etc.)
+4. Analyzing and improving existing prompts
+5. Recommending relevant blocks from the user's library
+
+# Available Prompt Techniques
+- **Chain of Thought (CoT):** Step-by-step reasoning
+- **Few-Shot Learning:** Learning from examples
+- **Zero-Shot:** No examples, just instructions
+- **ReAct:** Reasoning + Acting pattern
+- **Tree of Thoughts:** Exploring multiple reasoning paths
+- **Role Prompting:** Defining specific personas
+- **Constitutional AI:** Building in values and constraints
+- **Self-Consistency:** Multiple reasoning attempts
+- **Meta-Prompting:** Prompts that generate prompts
+
+# Prompt Block Types
+- **Task:** Clear description of what needs to be accomplished
+- **Actor:** Role/persona the AI should adopt
+- **Context:** Background information, constraints, requirements
+- **Output:** Desired format, structure, and specifications
+- **Examples:** Sample inputs and outputs (for few-shot)
+- **Instructions:** Step-by-step guidance (for CoT)
+- **Constraints:** Limitations, boundaries, restrictions
+- **Evaluation:** Success criteria and quality measures
+
+# Interaction Guidelines
+1. **Ask clarifying questions** when user goals are ambiguous
+2. **Suggest specific block types** based on their needs
+3. **Provide concrete examples** rather than abstract advice
+4. **Reference techniques** by name so users can learn
+5. **Keep responses focused** on prompt engineering
+6. **Be encouraging** - prompt engineering is learnable
+
+# Response Format
+When suggesting prompt structure, use this format:
+"For [user's goal], I recommend:
+- Task: [specific suggestion]
+- Actor: [specific suggestion]
+- Context: [specific suggestion]
+[etc.]"
+
+# Constraints
+- ONLY discuss prompt engineering topics
+- Do NOT engage in: general chat, off-topic questions, unrelated tasks
+- If asked off-topic, politely redirect: "I'm specialized in prompt 
+  engineering. Let me know what kind of prompt you'd like to create!"
+
+# Context Awareness
+You have access to:
+- The user's current prompt (if any)
+- Available blocks in their library (you'll be provided relevant ones)
+- Conversation history within this session
+
+Use this context to provide personalized, relevant suggestions.
+```
+
+### 5.5 Security Considerations
+
+**Authentication & Authorization:**
+- JWT tokens with short expiry (15 minutes)
+- Refresh tokens with rotation
+- Role-based access control (RBAC)
+- Rate limiting on API endpoints
+- CORS configuration for allowed origins
+
+**Data Protection:**
+- Encrypt sensitive data at rest
+- HTTPS/TLS for all communications
+- Input validation and sanitization
+- SQL injection prevention (parameterized queries)
+- XSS protection (Content Security Policy)
+- CSRF tokens for state-changing operations
+
+**API Security:**
+- API key management (never expose in frontend)
+- Server-side API calls to Claude/OpenAI
+- Request signing and validation
+- Audit logging for sensitive operations
+
+**Privacy:**
+- GDPR compliance (data export, deletion)
+- Clear privacy policy
+- Optional prompt privacy settings
+- Anonymous usage analytics
+
+---
+
+## 6. User Experience Design
+
+### 6.1 Design Principles
+
+**1. Clarity Over Complexity**
+- Clear visual hierarchy
+- Obvious call-to-action buttons
+- Progressive disclosure of advanced features
+
+**2. Efficiency & Speed**
+- Minimize clicks to accomplish tasks
+- Keyboard shortcuts for power users
+- Auto-save and draft recovery
+- Fast loading times (< 2s initial load)
+
+**3. Modern Aesthetic**
+- Glassmorphism and soft gradients
+- Pastel color palette (pink, purple, mint, yellow)
+- 3D abstract shapes for visual interest
+- Smooth animations and transitions
+- Dark mode support
+
+**4. Accessibility**
+- WCAG 2.1 AA compliance
+- Keyboard navigation throughout
+- Screen reader support
+- High contrast mode
+- Resizable text
+
+### 6.2 Color Palette
+
+**Primary Colors:**
+- Pink: `#FF9ECD` (accents, CTAs)
+- Purple: `#B8A4FF` (interactive elements)
+- Mint: `#A4FFD4` (success states)
+- Yellow: `#FFE7A4` (highlights)
+
+**Neutrals:**
+- Background: `#FAFAFA` (light mode) / `#1A1A1A` (dark mode)
+- Surface: `#FFFFFF` / `#2A2A2A`
+- Text Primary: `#1A1A1A` / `#FAFAFA`
+- Text Secondary: `#6B6B6B` / `#A0A0A0`
+- Border: `#E5E5E5` / `#404040`
+
+**Semantic Colors:**
+- Success: `#4ADE80`
+- Warning: `#FBBF24`
+- Error: `#EF4444`
+- Info: `#60A5FA`
+
+### 6.3 Typography
+
+**Font Stack:**
+- Primary: 'Inter', system-ui, sans-serif
+- Monospace: 'JetBrains Mono', 'Fira Code', monospace
+
+**Scale:**
+- Display: 48px / 3rem (h1, hero text)
+- Heading 1: 36px / 2.25rem
+- Heading 2: 30px / 1.875rem
+- Heading 3: 24px / 1.5rem
+- Body Large: 18px / 1.125rem
+- Body: 16px / 1rem
+- Body Small: 14px / 0.875rem
+- Caption: 12px / 0.75rem
+
+### 6.4 Component Library
+
+**Buttons:**
+- Primary: Gradient background, white text, rounded-full
+- Secondary: Outline style, transparent background
+- Ghost: Text only, hover background
+- Icon: Square/circle with icon
+
+**Cards:**
+- Elevated: Box shadow, rounded corners (16px)
+- Flat: Border, no shadow
+- Interactive: Hover lift effect
+
+**Inputs:**
+- Text: Rounded corners, focus ring, clear button
+- Textarea: Resizable, auto-expand
+- Search: Icon prefix, instant results
+
+**Modals:**
+- Backdrop blur effect
+- Centered, max-width 600px
+- Slide-up animation
+- Close button + ESC key
+
+### 6.5 Animations
+
+**Micro-interactions:**
+- Button hover: Scale 1.02, shadow increase
+- Card hover: Lift effect (translateY -4px)
+- Drag: Item follows cursor, drop zones highlight
+- Loading: Skeleton screens, spinner for actions
+
+**Transitions:**
+- Page changes: Fade + slide (300ms)
+- Modal open: Scale + fade (200ms)
+- Accordion: Height transition (250ms)
+- Toast notifications: Slide from top-right (300ms)
+
+**Performance:**
+- Use `transform` and `opacity` for animations
+- Reduce motion for accessibility preferences
+- GPU acceleration with `will-change`
+
+---
+
+## 7. User Flows
+
+### 7.1 First-Time User Flow
+
+1. **Landing Page**
+   - User reads value proposition
+   - Clicks "Sign Up" or "New Prompt"
+
+2. **Authentication**
+   - Chooses email/password or OAuth
+   - Completes registration
+   - Email verification (optional, can skip)
+
+3. **Onboarding Tutorial** (Optional)
+   - Interactive walkthrough of key features
+   - Example prompt creation
+   - Library explanation
+   - Skip option available
+
+4. **First Prompt Creation**
+   - Greeted by Chef: "Hi! What kind of prompt would you like to create?"
+   - User describes goal in natural language
+   - Chef suggests structure and generates initial blocks
+   - User reviews and edits
+   - Saves first prompt
+
+5. **Post-Creation**
+   - Success message + prompt saved to library
+   - Suggestion to explore templates
+   - CTA to create another prompt
+
+### 7.2 Creating a Prompt from Scratch
+
+1. **Initiation**
+   - Click "New Prompt" from anywhere
+   - Redirected to Prompt Builder
+
+2. **Chat with Chef**
+   - User: "I need a prompt for analyzing customer feedback"
+   - Chef: "I'll help you create a sentiment analysis prompt. Should it:
+     - Categorize feedback by sentiment (positive/negative/neutral)?
+     - Extract specific themes or issues?
+     - Suggest action items?
+     Let me know and I'll structure it!"
+
+3. **Structure Generation**
+   - User clarifies requirements
+   - Chef generates block structure:
+     ```
+     Task: Analyze customer feedback and categorize sentiment
+     Actor: Customer support analyst with expertise in NLP
+     Context: E-commerce company, feedback from surveys
+     Output: Structured JSON with sentiment + themes + urgency
+     Examples: [Chef provides 2-3 sample inputs/outputs]
+     ```
+
+4. **Refinement**
+   - User edits blocks directly
+   - Can ask Chef for improvements
+   - Can drag blocks from library
+   - Reorder blocks as needed
+
+5. **Saving**
+   - User names prompt: "Customer Feedback Analyzer"
+   - Clicks "Save"
+   - Prompt added to library
+   - Individual blocks available for reuse
+
+### 7.3 Reusing Blocks from Library
+
+1. **Starting New Prompt**
+   - User creates new prompt for different use case
+   - Has similar requirements to past project
+
+2. **Browsing Library**
+   - Opens library sidebar
+   - Searches for "customer" or filters by "Context" type
+   - Finds relevant context block from previous prompt
+
+3. **Insertion**
+   - Clicks block or drags into prompt builder
+   - Block content populates in new prompt
+   - User edits to fit new context
+   - Maintains connection to library version (shows source)
+
+4. **Benefits**
+   - Saves time rewriting common elements
+   - Maintains consistency across prompts
+   - Learns from past successes
+
+### 7.4 Using Templates
+
+1. **Discovery**
+   - User clicks "Templates" in navigation
+   - Browses curated templates by category:
+     - Reasoning (CoT, Tree of Thoughts)
+     - Learning (Few-Shot, Zero-Shot)
+     - Agents (ReAct, Multi-step)
+     - Creative (Story, Poetry, Dialogue)
+     - Professional (Email, Report, Analysis)
+
+2. **Preview**
+   - Clicks template card
+   - Sees full structure with all blocks
+   - Reads description and use cases
+   - Views community ratings/reviews
+
+3. **Instantiation**
+   - Clicks "Use Template"
+   - Template copied to new prompt
+   - All blocks editable
+   - Pre-filled with placeholder content
+
+4. **Customization**
+   - User fills in specifics
+   - Removes unnecessary blocks
+   - Adds custom blocks
+   - Saves as personal prompt or new template
+
+---
+
+## 8. MVP Scope & Phasing
+
+### Phase 1: MVP (Now)
+**Goal:** Validate core concept with functional prototype
+
+**Features:**
+- ✅ Landing page with sign up
+- ✅ User authentication
+- ✅ Chat with Chad (basic)
+- ✅ Prompt builder with standard blocks
+- ✅ Basic block library (save & reuse)
+- ✅ Prompt library (gallery view)
+- ✅ Search and filter
+- ✅ Manual block editing
+- ✅ Responsive design (desktop + tablet)
+
+### Phase 2: Enhanced (After MVP)
+**Goal:** Increase engagement and power user adoption
+
+**Features:**
+- ✅ Advanced block reusability (drag & drop)
+- ✅ Template marketplace
+- ✅ Prompt Mixer
+- ✅ Block versioning
+- ✅ Tags and organization
+- ✅ Export prompts (JSON, Markdown)
+- ✅ Mobile app (iOS/Android) OR mobile-optimized web
+- ✅ Collaboration features (sharing)
+
+### Phase 3: Advanced (After Enhanced)
+**Goal:** Establish platform leadership and community
+
+**Features:**
+- ✅ Node-based prompt builder
+- ✅ Prompt testing & analytics
+- ✅ AI optimization suggestions
+- ✅ RAG / Knowledge base integration
+- ✅ Team workspaces
+- ✅ API for integrations
+- ✅ Plugin system
+---
+
+## 9. Technical Considerations
+
+### 9.1 Performance Targets
+- Initial page load: < 2 seconds
+- Time to interactive: < 3 seconds
+- API response time: < 500ms (p95)
+- Chat response (streaming): First token < 1 second
+- Lighthouse score: > 90 (all categories)
+
+
+
+### 9.2 Monitoring & Observability
+- Error tracking (Sentry)
+- Performance monitoring (New Relic / DataDog)
+- User analytics (PostHog / Mixpanel)
+- API logging and tracing
+- Database query performance
+- LLM API usage and costs

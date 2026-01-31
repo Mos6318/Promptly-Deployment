@@ -1,0 +1,20 @@
+import type { Template } from './types';
+
+export const divergentThinking: Template = {
+    id: 'divergent-thinking',
+    name: 'Divergent Thinking',
+    technique: 'TACO',
+    description: 'Generate a wide range of divergent ideas for a UX design challenge, focusing on quantity and variety.',
+    sections: {
+        'task': 'Generate a wide range of divergent ideas for a UX design challenge. The focus is on quantity and variety of ideas, not refinement.',
+        'actor': 'You are a creative ideation assistant helping UX Design students break out of idea blocks. Think like a group of designers, engineers, and entrepreneurs scribbling sticky notes in a fast-paced brainstorm.',
+        'context': `Design challenge: [insert challenge/problem here]
+Target users: [insert primary user group(s)]
+Goal: [insert objective, e.g., improve trust, usability, or engagement]
+Stage: Early concept ideation (divergent thinking, no need for feasibility yet).`,
+        'output': `At least X short ideas written like sticky notes (few words/short phrases).
+- Organize ideas into X natural themes/categories.
+- Include both practical and wild/futuristic ideas.
+- Keep tone fast, playful, messy (brainwriting style).`
+    }
+};
