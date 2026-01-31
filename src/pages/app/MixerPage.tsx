@@ -76,6 +76,12 @@ export default function MixerPage() {
         navigate('/workspace');
     };
 
+    const handleCreateNew = () => {
+        // Explicitly clear/set empty for a new prompt
+        setFullPrompt({}, undefined, undefined);
+        navigate('/workspace');
+    };
+
     const formatDate = (timestamp: number) => {
         const now = Date.now();
         const diff = now - timestamp;
@@ -277,7 +283,7 @@ export default function MixerPage() {
                                 ))}
                                 <CarouselItem className="pl-4 md:basis-1/2 lg:basis-1/3">
                                     <div
-                                        onClick={handleMix}
+                                        onClick={handleCreateNew}
                                         className="flex flex-col items-center justify-center p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 !bg-transparent border-dashed hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors cursor-pointer h-[600px]"
                                     >
                                         <div className="h-12 w-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mb-3">
@@ -358,7 +364,7 @@ export default function MixerPage() {
                             ))}
                             <CarouselItem className="pl-4 md:basis-1/2 lg:basis-1/3">
                                 <div
-                                    onClick={handleMix}
+                                    onClick={handleCreateNew}
                                     className="flex flex-col items-center justify-center p-6 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 !bg-transparent border-dashed hover:bg-zinc-50 dark:hover:bg-zinc-900/50 transition-colors cursor-pointer h-[600px]"
                                 >
                                     <div className="h-12 w-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mb-3">
