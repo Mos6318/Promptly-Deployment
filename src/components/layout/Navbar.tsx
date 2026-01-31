@@ -34,9 +34,7 @@ export function Navbar() {
                     <Link to="/" className="hover:text-black dark:hover:text-white transition-colors">Home</Link>
                     <Link to="/library" className="hover:text-black dark:hover:text-white transition-colors">Library</Link>
                     <Link to="/mixer" className="hover:text-black dark:hover:text-white transition-colors">Mixer</Link>
-                    {user && (
-                        <Link to="/workspace" className="hover:text-black dark:hover:text-white transition-colors">Workbench</Link>
-                    )}
+                    <Link to="/workspace" className="hover:text-black dark:hover:text-white transition-colors">Workbench</Link>
                 </nav>
 
                 {/* Actions */}
