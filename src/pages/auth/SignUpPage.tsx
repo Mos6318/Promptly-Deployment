@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,6 +15,7 @@ export default function SignUpPage() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -49,42 +51,55 @@ export default function SignUpPage() {
                 <CardContent className="space-y-4">
                     <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
-                            <Label htmlFor="first-name">First name</Label>
+                            <Label htmlFor="first-name" className="dark:text-white">First name</Label>
                             <Input
                                 id="first-name"
                                 placeholder="Max"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
+                                className="bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                             />
                         </div>
                         <div className="space-y-2">
-                            <Label htmlFor="last-name">Last name</Label>
+                            <Label htmlFor="last-name" className="dark:text-white">Last name</Label>
                             <Input
                                 id="last-name"
                                 placeholder="Robinson"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
+                                className="bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                             />
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email" className="dark:text-white">Email</Label>
                         <Input
                             id="email"
                             type="email"
                             placeholder="name@example.com"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
+                            className="bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800"
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="password">Password</Label>
-                        <Input
-                            id="password"
-                            type="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                        />
+                        <Label htmlFor="password" className="dark:text-white">Password</Label>
+                        <div className="relative">
+                            <Input
+                                id="password"
+                                type={showPassword ? 'text' : 'password'}
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                className="bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 dark:text-zinc-300 pr-10"
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-zinc-500 dark:text-zinc-300 hover:text-zinc-700 dark:hover:text-zinc-100"
+                            >
+                                {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                            </button>
+                        </div>
                     </div>
                     {error && (
                         <div className="text-sm text-red-500 font-medium">
