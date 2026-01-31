@@ -53,7 +53,11 @@ const saveUserData = (userId: string, data: { savedPrompts: SavedPrompt[], templ
 
 export const useLibraryStore = create<LibraryState>((set, get) => ({
     savedPrompts: [],
-    templates: [],
+    templates: INITIAL_TEMPLATES.map(t => ({
+        ...t,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+    })),
     currentUserId: null,
 
     initUser: (userId: string) => {
@@ -69,7 +73,11 @@ export const useLibraryStore = create<LibraryState>((set, get) => ({
         set({
             currentUserId: null,
             savedPrompts: [],
-            templates: []
+            templates: INITIAL_TEMPLATES.map(t => ({
+                ...t,
+                createdAt: Date.now(),
+                updatedAt: Date.now()
+            }))
         });
     },
 

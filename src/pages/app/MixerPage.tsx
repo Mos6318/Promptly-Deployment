@@ -283,7 +283,7 @@ export default function MixerPage() {
                                         <div className="h-12 w-12 rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center mb-3">
                                             <span className="text-2xl text-zinc-400">+</span>
                                         </div>
-                                        <span className="font-medium text-zinc-500">Mix New Prompt</span>
+                                        <span className="font-medium text-zinc-500">Create New Prompt</span>
                                     </div>
                                 </CarouselItem>
                             </CarouselContent>
