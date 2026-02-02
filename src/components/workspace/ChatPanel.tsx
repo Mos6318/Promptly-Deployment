@@ -48,7 +48,9 @@ export function ChatPanel() {
                 setCurrentSection(detection.sectionKey);
 
                 // Check if this is a refinement (section already exists) or new section
-                const isRefinement = currentPrompt.hasOwnProperty(detection.sectionKey);
+                // Use getState() to avoid dependency loop with currentPrompt
+                const currentPromptState = usePromptStore.getState().currentPrompt;
+                const isRefinement = currentPromptState.hasOwnProperty(detection.sectionKey);
 
                 if (isRefinement) {
                     // For refinements: store as pending, wait for user confirmation
@@ -63,7 +65,7 @@ export function ChatPanel() {
                 }
             }
         }
-    }, [messages, setCurrentSection, updateSection, currentPrompt]);
+    }, [messages, setCurrentSection, updateSection]);
 
     const handleSendMessage = async () => {
         if (!inputValue.trim() || isLoading) return;
