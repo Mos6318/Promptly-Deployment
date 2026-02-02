@@ -1,73 +1,80 @@
-# React + TypeScript + Vite
+# Promptly
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![Promptly Banner](https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=1200&h=400)
 
-Currently, two official plugins are available:
+> **Shape your learning experience.**  
+> The intelligent platform for mastering prompt engineering through modular design and AI assistance.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[![React](https://img.shields.io/badge/React-19-blue?logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-Fast-yellow?logo=vite)](https://vitejs.dev/)
+[![Tailwind](https://img.shields.io/badge/Tailwind-4.0-cyan?logo=tailwindcss)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green)](./LICENSE)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🚀 Overview
 
-## Expanding the ESLint configuration
+**Promptly** solves the "blank page problem" for AI interactions. Instead of staring at an empty chat box, Promptly allows you to build sophisticated prompts using a visual, component-based interface. 
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Whether you are an AI Engineer needing consistent test cases, or a student learning the ropes of Large Language Models, Promptly provides the structure and guidance you need.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## ✨ Key Features
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+*   **🧩 Component-Based Builder**: Drag and drop blocks (Task, Context, Persona) to construct robust prompts.
+*   **🤖 Chat with Chad**: An integrated AI assistant that guides you through the prompt creation process using techniques like CoT (Chain of Thought) and Few-Shot prompting.
+*   **⚗️ The Mixer**: Combine successful elements from previous prompts to create new recipes for success.
+*   **🌑 Dark Mode**: A stunning, glassmorphism-inspired UI that looks great day or night.
+*   **📚 Template Library**: Start fast with pre-built templates for Coding, Writing, and Analysis.
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+## 🛠️ Tech Stack
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+*   **Frontend**: React 19, TypeScript, Vite
+*   **Styling**: Tailwind CSS 4.0, Radix UI, Lucide Icons
+*   **State**: Zustand
+*   **DnD**: @dnd-kit
+*   **AI**: Integration hooks for OpenAI / Anthropic
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🏁 Getting Started
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Follow these instructions to run the project locally.
+
+### Prerequisites
+*   Node.js (v18 or higher)
+*   npm or yarn
+
+### Installation
+
+1.  **Clone the repository**
+    ```bash
+    git clone https://github.com/yourusername/promptly.git
+    cd promptly
+    ```
+
+2.  **Install dependencies**
+    ```bash
+    npm install
+    ```
+
+3.  **Run the development server**
+    ```bash
+    npm run dev
+    ```
+
+4.  **Open in Browser**
+    navigate to `http://localhost:5173`
+
+## 📖 Documentation
+
+*   [Product Requirements (PDR)](./PDR)
+*   [Project Analysis](./ANALYSIS.md)
+*   [Deployment Guide](./DEPLOYMENT.md)
+
+## 🔮 Future Roadmap
+
+*   **Backend Sync**: Full PostgreSQL integration for cross-device sync.
+*   **Graph Mode**: Node-based editor for complex chain-of-thought flows.
+*   **Marketplace**: Share and monetization of prompt templates.
+
+---
+
+*Built with ❤️ for the Vibe Coding Project Final Submission.*
