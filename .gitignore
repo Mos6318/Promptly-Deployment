@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Project Documentation
+ANALYSIS.md
+PRESENTATION.md
+REPORT.md
+
+ 
+ #

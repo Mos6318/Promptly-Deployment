@@ -46,7 +46,7 @@ Follow these instructions to run the project locally.
 
 1.  **Clone the repository**
     ```bash
-    git clone https://github.com/yourusername/promptly.git
+    git clone https://github.com/Mos6318/Promptly-Deployment
     cd promptly
     ```
 
@@ -66,7 +66,6 @@ Follow these instructions to run the project locally.
 ## 📖 Documentation
 
 *   [Product Requirements (PDR)](./PDR)
-*   [Project Analysis](./ANALYSIS.md)
 *   [Deployment Guide](./DEPLOYMENT.md)
 
 ## 🔮 Future Roadmap

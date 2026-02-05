@@ -1,0 +1,87 @@
+﻿
+> temp-app@0.0.0 lint
+> eslint .
+
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\@\components\ui\button.tsx
+  57:18  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\components\ui\input.tsx
+  5:18  error  An interface declaring no members is equivalent to its supertype  @typescript-eslint/no-empty-object-type
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\components\workspace\BuilderPanel.tsx
+   61:53  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  124:13  error  'currentTechniqueId' is never reassigned. Use 'const' instead              prefer-const
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\components\workspace\ChatBubble.tsx
+  41:47  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  42:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  43:48  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  44:50  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+  45:49  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\components\workspace\ChatPanel.tsx
+   51:52  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  133:18  error  'error' is defined but never used                                          @typescript-eslint/no-unused-vars
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\context\AuthContext.tsx
+   45:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\context\AuthContext.tsx:45:13
+  43 |         const storedSession = localStorage.getItem('promptly_session_user');
+  44 |         if (storedSession) {
+> 45 |             setUser(JSON.parse(storedSession));
+     |             ^^^^^^^ Avoid calling setState() directly within an effect
+  46 |         }
+  47 |     }, []);
+  48 |  react-hooks/set-state-in-effect
+   64:31  error  '_' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+   95:27  error  '_' is assigned a value but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    @typescript-eslint/no-unused-vars
+  165:17  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-refresh/only-export-components
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\lib\api\gemini.ts
+  14:9   error  'conversationMessages' is never reassigned. Use 'const' instead  prefer-const
+  48:17  error  'historyMessages' is never reassigned. Use 'const' instead       prefer-const
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\pages\app\SettingsPage.tsx
+  36:13  error  Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\pages\app\SettingsPage.tsx:36:13
+  34 |     useEffect(() => {
+  35 |         if (user) {
+> 36 |             setNickname(user.nickname || user.name);
+     |             ^^^^^^^^^^^ Avoid calling setState() directly within an effect
+  37 |             // Extract seed from URL if possible, or just default to empty
+  38 |             const match = user.avatar?.match(/seed=([^&]*)/);
+  39 |             if (match) setSelectedAvatarSeed(match[1]);  react-hooks/set-state-in-effect
+  62:23  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+  73:23  error  Unexpected any. Specify a different type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         @typescript-eslint/no-explicit-any
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\pages\auth\LoginPage.tsx
+  23:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\pages\auth\SignUpPage.tsx
+  32:23  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\presentation\slides\SlideTech.tsx
+  4:55  error  Unexpected any. Specify a different type  @typescript-eslint/no-explicit-any
+
+C:\Users\zirae\.gemini\antigravity\playground\promptly-workspace-deployment\src\store\promptStore.ts
+  37:55  error  Do not access Object.prototype method 'hasOwnProperty' from target object  no-prototype-builtins
+  51:32  error  'removed' is assigned a value but never used                               @typescript-eslint/no-unused-vars
+
+Ô£û 25 problems (25 errors, 0 warnings)
+  3 errors and 0 warnings potentially fixable with the `--fix` option.
+

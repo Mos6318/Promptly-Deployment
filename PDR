@@ -72,11 +72,6 @@ Promptly is a web-based application designed to revolutionize prompt engineering
 - Responsive design with modern aesthetic
 - Abstract 3D visual elements (glassmorphism style)
 
-**User Stories:**
-- As a new visitor, I want to understand what Promptly does within 5 seconds
-- As a returning user, I want quick access to create a new prompt from elements i created before with just little twist depending o use case
-- As any user, I want to navigate easily between main sections
-
 #### 4.1.2 AI Chat Assistant ("Chat with Chad")
 **Priority:** P0 (Critical)
 
@@ -90,7 +85,7 @@ Promptly is a web-based application designed to revolutionize prompt engineering
 
 **System Prompt Structure:**
 ```
-You are "Chef", a specialized prompt engineering assistant for Promptly.
+You are "Chad", a specialized prompt engineering assistant for Promptly.
 
 SCOPE: You ONLY help with:
 - Prompt creation and structure
@@ -104,19 +99,19 @@ Role Prompting, Constitutional AI, Self-Consistency, Meta-Prompting, and more if
 
 BLOCK TYPES YOU HELP CREATE:depending on the use case. 
 
-Chef is a meta-prompt creation assistant that guides users step-by-step through building prompts using various techniques.
+Chad is a meta-prompt creation assistant that guides users step-by-step through building prompts using various techniques.
 Conversation Flow:
 
-Introduces himself: "Hi! My name is Chef! A meta prompt master."
+Introduces himself: "Hi! My name is Chad! A meta prompt master."
 Asks what LLM will be used (Claude, ChatGPT, etc.)
 Asks about the task/project description
 Asks which technique to use (TACO, RISEN, Chain of Thought, Multiple Outputs, Tree of Thought, System Prompting)
 
-If user doesn't know, Chef recommends one with a SHORT explanation why
+If user doesn't know, Chad recommends one with a SHORT explanation why
 
 
 Guides through technique-specific components step-by-step
-For each component, Chef proposes ONE option (max 3 sentences) based on context
+For each component, Chad proposes ONE option (max 3 sentences) based on context
 User can accept, modify, or provide their own
 After completing standard components, asks: "Would you like to add any additional elements? (e.g., examples, constraints, formatting rules)"
 Only generates final prompt when user says "generate final prompt"
@@ -409,119 +404,8 @@ Chef proposes → Right panel previews → User approves/modifies → User commi
 - **Monitoring:** Sentry (errors) + PostHog (analytics)
 - **CI/CD:** GitHub Actions
 
-### 5.2 Database Schema
 
-#### Users Table
-```sql
-CREATE TABLE users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  username VARCHAR(100) UNIQUE,
-  auth_provider VARCHAR(50),
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-#### Prompts Table
-```sql
-CREATE TABLE prompts (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  title VARCHAR(255) NOT NULL,
-  description TEXT,
-  technique VARCHAR(100), -- 'chain_of_thought', 'few_shot', etc.
-  is_template BOOLEAN DEFAULT FALSE,
-  is_public BOOLEAN DEFAULT FALSE,
-  view_count INT DEFAULT 0,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-#### Blocks Table
-```sql
-CREATE TABLE blocks (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  prompt_id UUID REFERENCES prompts(id) ON DELETE CASCADE,
-  type VARCHAR(50) NOT NULL, -- 'task', 'actor', 'context', etc.
-  label VARCHAR(100),
-  content TEXT NOT NULL,
-  order_index INT NOT NULL,
-  is_reusable BOOLEAN DEFAULT TRUE,
-  metadata JSONB, -- tags, source info, etc.
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-#### Block Library Table
-```sql
-CREATE TABLE block_library (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  block_id UUID REFERENCES blocks(id) ON DELETE CASCADE,
-  name VARCHAR(255),
-  category VARCHAR(100),
-  tags TEXT[],
-  usage_count INT DEFAULT 0,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-#### Chat History Table
-```sql
-CREATE TABLE chat_history (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-  session_id UUID NOT NULL,
-  role VARCHAR(20) NOT NULL, -- 'user', 'assistant'
-  content TEXT NOT NULL,
-  prompt_id UUID REFERENCES prompts(id) ON DELETE SET NULL,
-  created_at TIMESTAMP DEFAULT NOW()
-);
-```
-
-### 5.3 API Endpoints
-
-#### Authentication
-- `POST /api/auth/register` - Create new user account
-- `POST /api/auth/login` - User login
-- `POST /api/auth/logout` - User logout
-- `POST /api/auth/refresh` - Refresh access token
-- `POST /api/auth/reset-password` - Request password reset
-
-#### Prompts
-- `GET /api/prompts` - List user's prompts (paginated)
-- `GET /api/prompts/:id` - Get specific prompt with blocks
-- `POST /api/prompts` - Create new prompt
-- `PUT /api/prompts/:id` - Update prompt
-- `DELETE /api/prompts/:id` - Delete prompt
-- `POST /api/prompts/:id/duplicate` - Duplicate prompt
-- `GET /api/prompts/templates` - List public templates
-
-#### Blocks
-- `GET /api/blocks/library` - Get user's block library
-- `POST /api/blocks` - Create new block
-- `PUT /api/blocks/:id` - Update block
-- `DELETE /api/blocks/:id` - Delete block
-- `POST /api/blocks/:id/save-to-library` - Save block to library
-- `GET /api/blocks/search` - Search blocks (full-text + vector)
-
-#### Chat
-- `POST /api/chat/message` - Send message to Chef
-
-- `GET /api/chat/history/:sessionId` - Get chat history
-- `DELETE /api/chat/history/:sessionId` - Clear session history
-- `POST /api/chat/commit` - Commit chat result to prompt builder
-
-#### AI Operations
-- `POST /api/ai/suggest-blocks` - Get block suggestions for goal
-- `POST /api/ai/improve-prompt` - Get improvement suggestions
-- `POST /api/ai/explain-technique` - Explain prompt technique
-- `POST /api/ai/generate-examples` - Generate example content
-
-### 5.4 System Prompt for Chef (Detailed)
+### 5.2 System Prompt for Chef (Detailed)
 
 ```markdown
 # System Identity
@@ -588,7 +472,7 @@ You have access to:
 Use this context to provide personalized, relevant suggestions.
 ```
 
-### 5.5 Security Considerations
+### 5.3 Security Considerations
 
 **Authentication & Authorization:**
 - JWT tokens with short expiry (15 minutes)
@@ -616,117 +500,6 @@ Use this context to provide personalized, relevant suggestions.
 - Clear privacy policy
 - Optional prompt privacy settings
 - Anonymous usage analytics
-
----
-
-## 6. User Experience Design
-
-### 6.1 Design Principles
-
-**1. Clarity Over Complexity**
-- Clear visual hierarchy
-- Obvious call-to-action buttons
-- Progressive disclosure of advanced features
-
-**2. Efficiency & Speed**
-- Minimize clicks to accomplish tasks
-- Keyboard shortcuts for power users
-- Auto-save and draft recovery
-- Fast loading times (< 2s initial load)
-
-**3. Modern Aesthetic**
-- Glassmorphism and soft gradients
-- Pastel color palette (pink, purple, mint, yellow)
-- 3D abstract shapes for visual interest
-- Smooth animations and transitions
-- Dark mode support
-
-**4. Accessibility**
-- WCAG 2.1 AA compliance
-- Keyboard navigation throughout
-- Screen reader support
-- High contrast mode
-- Resizable text
-
-### 6.2 Color Palette
-
-**Primary Colors:**
-- Pink: `#FF9ECD` (accents, CTAs)
-- Purple: `#B8A4FF` (interactive elements)
-- Mint: `#A4FFD4` (success states)
-- Yellow: `#FFE7A4` (highlights)
-
-**Neutrals:**
-- Background: `#FAFAFA` (light mode) / `#1A1A1A` (dark mode)
-- Surface: `#FFFFFF` / `#2A2A2A`
-- Text Primary: `#1A1A1A` / `#FAFAFA`
-- Text Secondary: `#6B6B6B` / `#A0A0A0`
-- Border: `#E5E5E5` / `#404040`
-
-**Semantic Colors:**
-- Success: `#4ADE80`
-- Warning: `#FBBF24`
-- Error: `#EF4444`
-- Info: `#60A5FA`
-
-### 6.3 Typography
-
-**Font Stack:**
-- Primary: 'Inter', system-ui, sans-serif
-- Monospace: 'JetBrains Mono', 'Fira Code', monospace
-
-**Scale:**
-- Display: 48px / 3rem (h1, hero text)
-- Heading 1: 36px / 2.25rem
-- Heading 2: 30px / 1.875rem
-- Heading 3: 24px / 1.5rem
-- Body Large: 18px / 1.125rem
-- Body: 16px / 1rem
-- Body Small: 14px / 0.875rem
-- Caption: 12px / 0.75rem
-
-### 6.4 Component Library
-
-**Buttons:**
-- Primary: Gradient background, white text, rounded-full
-- Secondary: Outline style, transparent background
-- Ghost: Text only, hover background
-- Icon: Square/circle with icon
-
-**Cards:**
-- Elevated: Box shadow, rounded corners (16px)
-- Flat: Border, no shadow
-- Interactive: Hover lift effect
-
-**Inputs:**
-- Text: Rounded corners, focus ring, clear button
-- Textarea: Resizable, auto-expand
-- Search: Icon prefix, instant results
-
-**Modals:**
-- Backdrop blur effect
-- Centered, max-width 600px
-- Slide-up animation
-- Close button + ESC key
-
-### 6.5 Animations
-
-**Micro-interactions:**
-- Button hover: Scale 1.02, shadow increase
-- Card hover: Lift effect (translateY -4px)
-- Drag: Item follows cursor, drop zones highlight
-- Loading: Skeleton screens, spinner for actions
-
-**Transitions:**
-- Page changes: Fade + slide (300ms)
-- Modal open: Scale + fade (200ms)
-- Accordion: Height transition (250ms)
-- Toast notifications: Slide from top-right (300ms)
-
-**Performance:**
-- Use `transform` and `opacity` for animations
-- Reduce motion for accessibility preferences
-- GPU acceleration with `will-change`
 
 ---
 
@@ -761,95 +534,6 @@ Use this context to provide personalized, relevant suggestions.
    - Suggestion to explore templates
    - CTA to create another prompt
 
-### 7.2 Creating a Prompt from Scratch
-
-1. **Initiation**
-   - Click "New Prompt" from anywhere
-   - Redirected to Prompt Builder
-
-2. **Chat with Chef**
-   - User: "I need a prompt for analyzing customer feedback"
-   - Chef: "I'll help you create a sentiment analysis prompt. Should it:
-     - Categorize feedback by sentiment (positive/negative/neutral)?
-     - Extract specific themes or issues?
-     - Suggest action items?
-     Let me know and I'll structure it!"
-
-3. **Structure Generation**
-   - User clarifies requirements
-   - Chef generates block structure:
-     ```
-     Task: Analyze customer feedback and categorize sentiment
-     Actor: Customer support analyst with expertise in NLP
-     Context: E-commerce company, feedback from surveys
-     Output: Structured JSON with sentiment + themes + urgency
-     Examples: [Chef provides 2-3 sample inputs/outputs]
-     ```
-
-4. **Refinement**
-   - User edits blocks directly
-   - Can ask Chef for improvements
-   - Can drag blocks from library
-   - Reorder blocks as needed
-
-5. **Saving**
-   - User names prompt: "Customer Feedback Analyzer"
-   - Clicks "Save"
-   - Prompt added to library
-   - Individual blocks available for reuse
-
-### 7.3 Reusing Blocks from Library
-
-1. **Starting New Prompt**
-   - User creates new prompt for different use case
-   - Has similar requirements to past project
-
-2. **Browsing Library**
-   - Opens library sidebar
-   - Searches for "customer" or filters by "Context" type
-   - Finds relevant context block from previous prompt
-
-3. **Insertion**
-   - Clicks block or drags into prompt builder
-   - Block content populates in new prompt
-   - User edits to fit new context
-   - Maintains connection to library version (shows source)
-
-4. **Benefits**
-   - Saves time rewriting common elements
-   - Maintains consistency across prompts
-   - Learns from past successes
-
-### 7.4 Using Templates
-
-1. **Discovery**
-   - User clicks "Templates" in navigation
-   - Browses curated templates by category:
-     - Reasoning (CoT, Tree of Thoughts)
-     - Learning (Few-Shot, Zero-Shot)
-     - Agents (ReAct, Multi-step)
-     - Creative (Story, Poetry, Dialogue)
-     - Professional (Email, Report, Analysis)
-
-2. **Preview**
-   - Clicks template card
-   - Sees full structure with all blocks
-   - Reads description and use cases
-   - Views community ratings/reviews
-
-3. **Instantiation**
-   - Clicks "Use Template"
-   - Template copied to new prompt
-   - All blocks editable
-   - Pre-filled with placeholder content
-
-4. **Customization**
-   - User fills in specifics
-   - Removes unnecessary blocks
-   - Adds custom blocks
-   - Saves as personal prompt or new template
-
----
 
 ## 8. MVP Scope & Phasing
 
@@ -892,22 +576,3 @@ Use this context to provide personalized, relevant suggestions.
 - ✅ API for integrations
 - ✅ Plugin system
 ---
-
-## 9. Technical Considerations
-
-### 9.1 Performance Targets
-- Initial page load: < 2 seconds
-- Time to interactive: < 3 seconds
-- API response time: < 500ms (p95)
-- Chat response (streaming): First token < 1 second
-- Lighthouse score: > 90 (all categories)
-
-
-
-### 9.2 Monitoring & Observability
-- Error tracking (Sentry)
-- Performance monitoring (New Relic / DataDog)
-- User analytics (PostHog / Mixpanel)
-- API logging and tracing
-- Database query performance
-- LLM API usage and costs
